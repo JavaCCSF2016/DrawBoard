@@ -6,6 +6,7 @@ import java.util.*;
 
 
 public class DrawBoardDisplay extends JPanel {
+	public static final int POINT_SIZE = 10;
 	private boolean isDrawing;
 	private static Color color = Color.black;
 	private ArrayList<DrawPoint> pointList;
@@ -61,7 +62,7 @@ public class DrawBoardDisplay extends JPanel {
 
 		for(DrawPoint p : pointList) {
 			pen.setColor(p.getColor());
-			pen.fillOval(p.getX(), p.getY(), 10, 10);
+			pen.fillOval(p.getX(), p.getY(), POINT_SIZE, POINT_SIZE);
 			repaint();
 			
 		}
