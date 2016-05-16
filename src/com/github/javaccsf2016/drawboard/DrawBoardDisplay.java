@@ -6,14 +6,18 @@ import java.util.*;
 
 
 public class DrawBoardDisplay extends JPanel {
+	private boolean isDrawing;
 	private static Color color = Color.black;
 	private ArrayList<Point> pointList;
+	
+	
 	public DrawBoardDisplay() {
-			setBackground(Color.PINK);
-			this.addMouseListener(new MouseMovementListener());			
-			pointList = new ArrayList<>();
-
-			}
+		isDrawing = false;
+		setBackground(Color.PINK);
+		this.addMouseMotionListener(new MouseMovementListener());	
+		this.addMouseListener(new MouseListener());
+		pointList = new ArrayList<>();
+	}
 			
 	public static void main(String args[]) {
 		EventQueue.invokeLater(new Runnable() {
@@ -29,26 +33,39 @@ public class DrawBoardDisplay extends JPanel {
 			}
 		   });
 	}
+	
+	public class MouseListener extends MouseAdapter {
+		public void mouseClicked(MouseEvent event) {
+			if(isDrawing) {
+				isDrawing = false;
+			} else {
+				isDrawing = true;
+			}
+			System.out.println(pointList);
+			System.out.println(isDrawing);
+		}
+	}
 
 	public class MouseMovementListener extends MouseAdapter{
 		@Override
 		public void mouseMoved(MouseEvent event) {
-			Point mostRecentPosition = event.getPoint();
-			pointList.add(mostRecentPosition);
-			repaint();
-			
+			if(isDrawing) {
+				Point mostRecentPosition = event.getPoint();
+				pointList.add(mostRecentPosition);
+				repaint();
+			}			
 		}
 	}
 
 	@Override
 	public void paintComponent(Graphics pen) {
 		super.paintComponent(pen);
-		pen.setColor(color.black);
+		pen.setColor(color);
 
 		for(Point p : pointList) {
 			int x = (int) p.getX();
 			int y = (int) p.getY();
-			pen.drawOval((int)x, (int)y, 100, 100);
+			pen.fillOval((int)x, (int)y, 10, 10);
 			repaint();
 			
 		}
