@@ -1,11 +1,5 @@
 package com.github.javaccsf2016.drawboard;
 
-
-/* 
- * This file provides a GUI shell for you to edit. 
- * Missing code marked with ??? must be replaced by you.
- */
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

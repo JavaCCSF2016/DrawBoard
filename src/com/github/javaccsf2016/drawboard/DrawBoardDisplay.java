@@ -41,8 +41,6 @@ public class DrawBoardDisplay extends JPanel {
 			} else {
 				isDrawing = true;
 			}
-			System.out.println(pointList);
-			System.out.println(isDrawing);
 		}
 	}
 
