@@ -8,7 +8,7 @@ import java.util.*;
 public class DrawBoardDisplay extends JPanel {
 	private boolean isDrawing;
 	private static Color color = Color.black;
-	private ArrayList<Point> pointList;
+	private ArrayList<DrawPoint> pointList;
 	
 	
 	public DrawBoardDisplay() {
@@ -50,8 +50,8 @@ public class DrawBoardDisplay extends JPanel {
 		@Override
 		public void mouseMoved(MouseEvent event) {
 			if(isDrawing) {
-				Point mostRecentPosition = event.getPoint();
-				pointList.add(mostRecentPosition);
+				DrawPoint newPoint = new DrawPoint(event.getPoint(), color);
+				pointList.add(newPoint);
 				repaint();
 			}			
 		}
@@ -60,12 +60,10 @@ public class DrawBoardDisplay extends JPanel {
 	@Override
 	public void paintComponent(Graphics pen) {
 		super.paintComponent(pen);
-		pen.setColor(color);
 
-		for(Point p : pointList) {
-			int x = (int) p.getX();
-			int y = (int) p.getY();
-			pen.fillOval((int)x, (int)y, 10, 10);
+		for(DrawPoint p : pointList) {
+			pen.setColor(p.getColor());
+			pen.fillOval(p.getX(), p.getY(), 10, 10);
 			repaint();
 			
 		}
