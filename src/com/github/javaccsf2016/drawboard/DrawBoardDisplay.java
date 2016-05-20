@@ -70,7 +70,7 @@ public class DrawBoardDisplay extends JPanel {
 		super.paintComponent(pen);
 			for(DrawPoint p : pointList) {
 				pen.setColor(p.getColor());
-				if (p.getShape() == 1) {
+				if (p.getShape() == RECTANGLE) {
 					pen.fillRect(p.getX(), p.getY(), RECT_W, RECT_L);
 				} else {
 					pen.fillOval(p.getX(), p.getY(), POINT_SIZE, POINT_SIZE);
