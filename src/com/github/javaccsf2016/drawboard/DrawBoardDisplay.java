@@ -9,7 +9,11 @@ import java.util.*;
 
 public class DrawBoardDisplay extends JPanel {
 	public static final int POINT_SIZE = 10;
-	public static final int RECT = 1;
+	public static final int WINDOW_W = 800;
+	public static final int WINDOW_L = 600;
+	public static final int COLOR_RANGE = 256;
+	public static final int RECT_W = 50;
+	public static final int RECT_L = 70;
 	private boolean isDrawing, drawRect;
 	private static Color color = Color.black;
 	private ArrayList<DrawPoint> pointList;
@@ -28,7 +32,7 @@ public class DrawBoardDisplay extends JPanel {
 		EventQueue.invokeLater(new Runnable() {
 		public void run() {
 				JFrame frame = new JFrame("Draw On Me");
-				frame.setSize(800,600);
+				frame.setSize(WINDOW_W,WINDOW_L);
 				DrawBoardDisplay drawingPanel = new DrawBoardDisplay();
 				ControlPanel controlPanel = new ControlPanel(drawingPanel);
 				frame.getContentPane().add(drawingPanel, BorderLayout.CENTER);
@@ -53,12 +57,7 @@ public class DrawBoardDisplay extends JPanel {
 		@Override
 		public void mouseMoved(MouseEvent event) {
 			if(isDrawing) {
-				DrawPoint newPoint = null;
-				if (drawRect) {
-					newPoint = new DrawPoint(event.getPoint(), color, RECT);
-				} else {
-					newPoint = new DrawPoint(event.getPoint(), color);
-				}
+				DrawPoint newPoint = new DrawPoint(event.getPoint(), color);
 				pointList.add(newPoint);
 				repaint();
 			}			
@@ -68,34 +67,49 @@ public class DrawBoardDisplay extends JPanel {
 	@Override
 	public void paintComponent(Graphics pen) {
 		super.paintComponent(pen);
-		
+		if (!drawRect){
 			for(DrawPoint p : pointList) {
 				pen.setColor(p.getColor());
-				if (p.getShape() == 0){
 				pen.fillOval(p.getX(), p.getY(), POINT_SIZE, POINT_SIZE);
-				} else if (p.getShape() == 1){
-					pen.fillRect(p.getX(), p.getY(), 50, 75); 
 				repaint();	
 			}
 		}
 		
+		if (drawRect){
+			Random randomGenerator = new Random();
+			int red = randomGenerator.nextInt(COLOR_RANGE);
+			int green = randomGenerator.nextInt(COLOR_RANGE);
+			int blue = randomGenerator.nextInt(COLOR_RANGE);
+			Color randomColor = new Color(red, green, blue);
+			int randomX = randomGenerator.nextInt(WINDOW_W);
+			int randomY =randomGenerator.nextInt(WINDOW_L);
+				pen.setColor (randomColor);  
+				pen.fillRect(randomX, randomY, RECT_W, RECT_L); 
+				repaint();
+			}
+		}
 		
-	}
+	
 
 	public void redPen() {
-		color = Color.RED; 	}
+		color = Color.RED; 
+		drawRect = false;}
 
 	public void bluePen() {
-		color = Color.BLUE;	}
+		color = Color.BLUE;	
+		drawRect = false;}
 
 	public void greenPen() {
-		color = Color.GREEN;	}
+		color = Color.GREEN;	
+		drawRect = false;}
 
 	public void eraser() {
-		color = Color.PINK;	}
+		color = Color.PINK;	
+		drawRect = false;}
 
 	public void clearAll() {
-		pointList.clear();}
+		pointList.clear();
+		drawRect = false;}
 
 	public void drawRect() {
 		drawRect = true;
