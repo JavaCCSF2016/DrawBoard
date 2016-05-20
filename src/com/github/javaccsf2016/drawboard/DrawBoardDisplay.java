@@ -8,6 +8,7 @@ import java.util.*;
 
 
 public class DrawBoardDisplay extends JPanel {
+	public static final int RECTANGLE = 1;
 	public static final int POINT_SIZE = 10;
 	public static final int WINDOW_W = 800;
 	public static final int WINDOW_L = 600;
@@ -67,25 +68,14 @@ public class DrawBoardDisplay extends JPanel {
 	@Override
 	public void paintComponent(Graphics pen) {
 		super.paintComponent(pen);
-		if (!drawRect){
 			for(DrawPoint p : pointList) {
 				pen.setColor(p.getColor());
-				pen.fillOval(p.getX(), p.getY(), POINT_SIZE, POINT_SIZE);
+				if (p.getShape() == 1) {
+					pen.fillRect(p.getX(), p.getY(), RECT_W, RECT_L);
+				} else {
+					pen.fillOval(p.getX(), p.getY(), POINT_SIZE, POINT_SIZE);
+				}
 				repaint();	
-			}
-		}
-		
-		if (drawRect){
-			Random randomGenerator = new Random();
-			int red = randomGenerator.nextInt(COLOR_RANGE);
-			int green = randomGenerator.nextInt(COLOR_RANGE);
-			int blue = randomGenerator.nextInt(COLOR_RANGE);
-			Color randomColor = new Color(red, green, blue);
-			int randomX = randomGenerator.nextInt(WINDOW_W);
-			int randomY =randomGenerator.nextInt(WINDOW_L);
-				pen.setColor (randomColor);  
-				pen.fillRect(randomX, randomY, RECT_W, RECT_L); 
-				repaint();
 			}
 		}
 		
@@ -112,7 +102,15 @@ public class DrawBoardDisplay extends JPanel {
 		drawRect = false;}
 
 	public void drawRect() {
-		drawRect = true;
+		Random randomGenerator = new Random();
+		int red = randomGenerator.nextInt(COLOR_RANGE);
+		int green = randomGenerator.nextInt(COLOR_RANGE);
+		int blue = randomGenerator.nextInt(COLOR_RANGE);
+		Color randomColor = new Color(red, green, blue);
+		int randomX = randomGenerator.nextInt(WINDOW_W);
+		int randomY =randomGenerator.nextInt(WINDOW_L);
+		repaint();
+		pointList.add(new DrawPoint(new Point(randomX, randomY), randomColor, RECTANGLE));
 	}
 
 }
