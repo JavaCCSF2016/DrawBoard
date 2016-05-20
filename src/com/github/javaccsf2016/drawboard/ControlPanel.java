@@ -37,7 +37,7 @@ public class ControlPanel extends JPanel {
 		this.add(eraserButton);
 		eraserButton.addActionListener(new ButtonListener());
 		
-		drawRectButton = new JButton("Draw Rectangle");
+		drawRectButton = new JButton("Rectangle Flash");
 		this.add(drawRectButton);
 		drawRectButton.addActionListener(new ButtonListener());
 		
