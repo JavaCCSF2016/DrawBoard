@@ -12,6 +12,7 @@ public class ControlPanel extends JPanel {
 	private JButton greenPenButton;
 	private JButton eraserButton;
 	private JButton clearAllButton;
+	private JButton drawRectButton;
 	private DrawBoardDisplay drawingPanel;
 
 	public ControlPanel(DrawBoardDisplay drawingPanel)  {
@@ -36,9 +37,14 @@ public class ControlPanel extends JPanel {
 		this.add(eraserButton);
 		eraserButton.addActionListener(new ButtonListener());
 		
+		drawRectButton = new JButton("Draw Rectangle");
+		this.add(drawRectButton);
+		drawRectButton.addActionListener(new ButtonListener());
+		
 		clearAllButton = new JButton("Clear All");
 		this.add(clearAllButton);
 		clearAllButton.addActionListener(new ButtonListener());
+		
 	}
 	
 	
@@ -54,11 +60,11 @@ public class ControlPanel extends JPanel {
 					drawingPanel.greenPen();}					
 			else if(event.getSource()==eraserButton) {
 				drawingPanel.eraser();} 
+			else if(event.getSource()==drawRectButton) {
+				drawingPanel.drawRect();}
 			else if(event.getSource()==clearAllButton) {
 				drawingPanel.clearAll();}
+			
 		}
 	}
 }
-
-	
-

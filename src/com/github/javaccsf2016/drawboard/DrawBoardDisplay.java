@@ -1,5 +1,6 @@
 //LeoYulinLi, califoxco(Jiaming Yang), qixin liu, and Tsoek Yin Lee Liu
 package com.github.javaccsf2016.drawboard;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -8,13 +9,14 @@ import java.util.*;
 
 public class DrawBoardDisplay extends JPanel {
 	public static final int POINT_SIZE = 10;
-	private boolean isDrawing;
+	private boolean isDrawing, drawRect;
 	private static Color color = Color.black;
 	private ArrayList<DrawPoint> pointList;
 	
 	
 	public DrawBoardDisplay() {
 		isDrawing = false;
+		drawRect = false;
 		setBackground(Color.PINK);
 		this.addMouseMotionListener(new MouseMovementListener());	
 		this.addMouseListener(new MouseListener());
@@ -60,13 +62,22 @@ public class DrawBoardDisplay extends JPanel {
 	@Override
 	public void paintComponent(Graphics pen) {
 		super.paintComponent(pen);
-
-		for(DrawPoint p : pointList) {
-			pen.setColor(p.getColor());
-			pen.fillOval(p.getX(), p.getY(), POINT_SIZE, POINT_SIZE);
-			repaint();
-			
+		if (!drawRect){
+			for(DrawPoint p : pointList) {
+				pen.setColor(p.getColor());
+				pen.fillOval(p.getX(), p.getY(), POINT_SIZE, POINT_SIZE);
+				repaint();	
+			}
 		}
+		
+		if (drawRect){
+			for(DrawPoint p : pointList) {
+				pen.setColor (p.getColor());  
+				pen.fillRect(p.getX(), p.getY(), 50, 75); 
+				repaint();
+			}
+		}
+		
 	}
 
 	public void redPen() {
@@ -83,5 +94,9 @@ public class DrawBoardDisplay extends JPanel {
 
 	public void clearAll() {
 		pointList.clear();}
+
+	public void drawRect() {
+		drawRect = true;
+	}
 
 }
