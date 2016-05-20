@@ -7,10 +7,18 @@ import java.awt.Point;
 public class DrawPoint {
 	private Point point;
 	private Color color;
+	private int shapeID;
+	
+	public DrawPoint(Point point, Color color, int shapeID){
+		this.point = point;
+		this.color = color;
+		this.shapeID = shapeID;
+	}
 	
 	public DrawPoint(Point point, Color color){
 		this.point = point;
 		this.color = color;
+		this.shapeID = 0;
 	}
 	
 	public Point getPoint() {
@@ -27,5 +35,9 @@ public class DrawPoint {
 	
 	public int getY() {
 		return (int)this.point.getY();
+	}
+	
+	public int getShape() {
+		return this.shapeID;
 	}
 }

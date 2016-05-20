@@ -9,6 +9,7 @@ import java.util.*;
 
 public class DrawBoardDisplay extends JPanel {
 	public static final int POINT_SIZE = 10;
+	public static final int RECT = 1;
 	private boolean isDrawing, drawRect;
 	private static Color color = Color.black;
 	private ArrayList<DrawPoint> pointList;
@@ -52,7 +53,12 @@ public class DrawBoardDisplay extends JPanel {
 		@Override
 		public void mouseMoved(MouseEvent event) {
 			if(isDrawing) {
-				DrawPoint newPoint = new DrawPoint(event.getPoint(), color);
+				DrawPoint newPoint = null;
+				if (drawRect) {
+					newPoint = new DrawPoint(event.getPoint(), color, RECT);
+				} else {
+					newPoint = new DrawPoint(event.getPoint(), color);
+				}
 				pointList.add(newPoint);
 				repaint();
 			}			
@@ -62,21 +68,17 @@ public class DrawBoardDisplay extends JPanel {
 	@Override
 	public void paintComponent(Graphics pen) {
 		super.paintComponent(pen);
-		if (!drawRect){
+		
 			for(DrawPoint p : pointList) {
 				pen.setColor(p.getColor());
+				if (p.getShape() == 0){
 				pen.fillOval(p.getX(), p.getY(), POINT_SIZE, POINT_SIZE);
+				} else if (p.getShape() == 1){
+					pen.fillRect(p.getX(), p.getY(), 50, 75); 
 				repaint();	
 			}
 		}
 		
-		if (drawRect){
-			for(DrawPoint p : pointList) {
-				pen.setColor (p.getColor());  
-				pen.fillRect(p.getX(), p.getY(), 50, 75); 
-				repaint();
-			}
-		}
 		
 	}
 
